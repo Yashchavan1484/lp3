@@ -1,33 +1,39 @@
+nterms = int(input("How many terms? "))
 
-def fib_iterative(n):
-    a, b = 0, 1
-    steps = 0
+if nterms <= 0:
+    print("Please enter a positive integer")
+else:
+    print("\n--- Iterative Method ---")
+    print("Fibonacci sequence:")
 
-    for i in range(n):
-        print(a, end=" ")
-        a, b = b, a + b
-        steps += 1
+    n1, n2 = 0, 1
+    iter_steps = 0
 
-    print("\nStep count (Iterative):", steps)
+    while iter_steps < nterms:
+        print(n1, end=" ")
+        n1, n2 = n2, n1 + n2
+        iter_steps += 1
 
-
-def fib_recursive(n, steps):
-    steps[0] += 1
-
-    if n <= 1:
-        return n
-
-    return fib_recursive(n - 1, steps) + fib_recursive(n - 2, steps)
+    print(f"\nTotal Iterative Steps: {iter_steps}")
 
 
-if __name__ == "__main__":
-    n = int(input("Enter n: "))
+    rec_steps = 0
 
-    print("Fibonacci series (Iterative):")
-    fib_iterative(n)
 
-    steps = [0]
-    result = fib_recursive(n, steps)
+    def recur_fibo(n):
+        global rec_steps
+        rec_steps += 1
 
-    print("Fibonacci number (Recursive):", result)
-    print("Step count (Recursive):", steps[0])
+        if n <= 1:
+            return n
+        else:
+            return recur_fibo(n - 1) + recur_fibo(n - 2)
+
+
+    print("\n--- Recursive Method ---")
+    print("Fibonacci sequence:")
+
+    for i in range(nterms):
+        print(recur_fibo(i), end=" ")
+
+    print(f"\nTotal Recursive Steps: {rec_steps}")
