@@ -1,0 +1,100 @@
+# Aim
+
+# To create a cryptocurrency wallet using MetaMask and use it to perform a crypto transaction on a test network.
+
+# Theory
+# A crypto wallet is software that stores your private keys and lets you sign transactions. It does not actually store coins. The coins live on the blockchain, and the wallet proves you own them.
+# MetaMask is a free, non-custodial wallet, available as a browser extension (Chrome, Firefox, Edge, Brave) and a mobile app. It connects you to Ethereum and to apps that run on it (dApps).
+# Non-custodial means only you control the keys. No company can reset your password or recover your funds.
+# Key pair: a private key (secret, used to sign transactions) and a public key, from which your public address (like 0xAbc...123) is derived. You share the address to receive funds. You never share the private key.
+# Secret Recovery Phrase (seed phrase): 12 words that can regenerate all your accounts and keys. Anyone who has it controls your wallet. MetaMask support will never ask for it.
+# Password: only encrypts the wallet on that one device. It is not the recovery method.
+# Network: MetaMask connects to Ethereum Mainnet (real money) and test networks such as Sepolia (free test ether with no real value). Use a testnet for the practical.
+# Gas fee: the fee paid to validators for processing a transaction, paid in ether.
+# Digital signature: the wallet signs the transaction with your private key, and the network verifies it using your public address, so nobody can forge it.
+# Transaction hash: a unique ID for each transaction, used to track it on a block explorer such as Etherscan.
+# Steps
+
+# Part A: Create the wallet
+
+# Open the Chrome Web Store (or the official site metamask.io), and install the MetaMask extension. Check that you are on the official site to avoid fake copies.
+# Click Create a new wallet, and agree to the terms.
+# Set a strong password. It protects the wallet on this device only.
+# Reveal and write down the 12-word Secret Recovery Phrase on paper, in order.
+# Confirm the phrase by selecting the requested words in the right order.
+# The wallet is created. You will see Account 1 with its public address (click it to copy).
+
+# Part B: Switch to a test network
+# 7. Open the network dropdown at the top and enable test networks if needed (Settings, then Advanced).
+# 8. Select Sepolia.
+
+# Part C: Get test ether and send a transaction
+# 9. Copy your address and request free test ether from a Sepolia faucet (search “Sepolia faucet”). Wait a minute for it to arrive.
+# 10. To send, click Send, then paste the recipient address (a second account works: click the account icon, then Add account).
+# 11. Enter the amount (for example 0.01 ETH) and review the gas fee.
+# 12. Click Confirm. The transaction first shows as pending and then confirmed in the Activity tab.
+# 13. Click the transaction and View on block explorer to see the transaction hash, block number, sender, receiver and gas used.
+
+# Tables to paste into GitHub
+
+# 1. Steps summary
+
+# markdown
+# | Step | Action                                      | Purpose                                         |
+# |------|---------------------------------------------|-------------------------------------------------|
+# | 1    | Install MetaMask from the official source   | Get the wallet software                         |
+# | 2    | Create a new wallet                         | Generate the keys                               |
+# | 3    | Set a password                              | Encrypt the wallet on this device               |
+# | 4    | Write down the 12-word recovery phrase      | Only way to recover the wallet                  |
+# | 5    | Confirm the phrase                          | Verify it was noted correctly                   |
+# | 6    | Copy the public address                     | Address used to receive funds                   |
+# | 7    | Switch to Sepolia test network              | Practise without real money                     |
+# | 8    | Get test ether from a faucet                | Free funds for testing                          |
+# | 9    | Send ether to another account               | Perform a transaction                           |
+# | 10   | Confirm and check on Etherscan              | Verify the transaction on the blockchain        |
+
+# 2. Wallet terms
+
+# markdown
+# | Term                    | Meaning                                                       | Share it?          |
+# |-------------------------|---------------------------------------------------------------|--------------------|
+# | Public address          | Account ID used to receive funds (starts with 0x)             | Yes                |
+# | Private key             | Secret key that signs transactions                            | Never              |
+# | Secret Recovery Phrase  | 12 words that regenerate all keys                             | Never              |
+# | Password                | Unlocks MetaMask on one device only                           | Never              |
+# | Gas fee                 | Fee paid to process a transaction                             | -                  |
+# | Transaction hash        | Unique ID of a transaction                                    | Yes                |
+
+# 3. Mainnet vs testnet
+
+# markdown
+# | Point           | Ethereum Mainnet                  | Test network (Sepolia)                |
+# |-----------------|-----------------------------------|---------------------------------------|
+# | Ether value     | Real money                        | No real value                         |
+# | How to get ether| Buy or receive                    | Free from a faucet                    |
+# | Purpose         | Real transactions and apps        | Learning and testing contracts        |
+# | Risk            | Real financial loss               | None                                  |
+
+# 4. Wallet types
+
+# markdown
+# | Point              | Hot wallet (MetaMask)             | Cold wallet (hardware, e.g. Ledger)    |
+# |--------------------|-----------------------------------|----------------------------------------|
+# | Connected to internet | Yes                            | No (offline)                           |
+# | Convenience        | High                              | Lower                                  |
+# | Security           | Moderate (phishing, malware risk) | High                                   |
+# | Cost               | Free                              | Paid device                            |
+# | Best for           | Daily use, dApps                  | Storing large amounts long term        |
+
+# 5. Custodial vs non-custodial
+
+# markdown
+# | Point              | Non-custodial (MetaMask)          | Custodial (exchange account)           |
+# |--------------------|-----------------------------------|----------------------------------------|
+# | Who holds the keys | You                               | The exchange                           |
+# | Recovery if lost   | Only with your recovery phrase    | Exchange can reset your account        |
+# | Control            | Full                              | Limited                                |
+# | Risk               | You can lose it by mistake        | Exchange can be hacked or freeze funds |
+# Easy example
+
+# Think of your wallet like an email account. Your public address is your email address, which you can give to anyone so they can send you something. Your private key is your password for signing, and nobody should have it. The blockchain is the mail server that holds the real balance. The wallet is just the app that proves it is you. The difference from email is that if you lose the recovery phrase, there is no “forgot password”.
