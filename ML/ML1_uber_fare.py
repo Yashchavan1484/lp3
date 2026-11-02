@@ -93,3 +93,80 @@ for name, model in (("Linear Regression", lr), ("Random Forest", rf)):
 
 print(pd.DataFrame(results).to_string(index=False))
 
+
+# Aim
+# To predict Uber fare amount from pickup and dropoff location, time and passenger count, and compare Linear Regression and Random Forest using R², MSE, RMSE and MAE.
+
+# Theory
+# Regression predicts a continuous number (the fare), unlike classification.
+# Linear Regression fits a straight-line relationship: fare = w1·x1 + w2·x2 + ... + b.
+# Random Forest builds many decision trees on random samples of the data and averages their predictions. It captures curves and interactions.
+# Haversine formula converts two latitude/longitude pairs into the real distance in km over the Earth’s surface. Distance is the strongest predictor of fare.
+# IQR method removes outliers: any fare outside Q1 − 1.5·IQR to Q3 + 1.5·IQR is dropped.
+# Train-test split keeps 20% of the data unseen, to test how well the model generalizes.
+    
+# Steps (matches your code)
+# Load the CSV and drop the useless columns (Unnamed: 0, key).
+# Remove missing values.
+# Convert pickup_datetime to a date type and extract hour, day, month, day of week and year. Then drop the original column.
+# Compute distance_km with the Haversine formula.
+# Clean the data: fare > 0, 0 < distance < 100 km, valid latitude/longitude, passengers between 1 and 6.
+# Remove fare outliers with IQR.
+# Plot the correlation heatmap and print each feature’s correlation with fare.
+# Split 80/20, train both models and predict on the test set.
+# Print R², MSE, RMSE and MAE for both models.
+
+# | Step | Operation | Purpose |
+# |------|-----------|---------|
+# | 1 | Drop `Unnamed: 0`, `key` | Remove useless columns |
+# | 2 | `dropna()` | Remove missing values |
+# | 3 | Extract hour, day, month, dayofweek, year | Convert date to numeric features |
+# | 4 | Haversine distance | Create the strongest feature (`distance_km`) |
+# | 5 | Range filters | Remove invalid coordinates, distance and passenger count |
+# | 6 | IQR on `fare_amount` | Remove outlier fares |
+# | 7 | Correlation heatmap | Find which features affect fare |
+# | 8 | 80/20 train-test split | Test on unseen data |
+# | 9 | Train Linear Regression and Random Forest | Compare the two models |
+# | 10 | R², MSE, RMSE, MAE | Evaluate the models |
+    
+# | Metric | Meaning | Better value |
+# |--------|---------|--------------|
+# | R² | Fraction of fare variation explained by the model (1 is perfect) | Higher |
+# | MSE | Average of squared errors, punishes big errors heavily | Lower |
+# | RMSE | Square root of MSE, in dollars | Lower |
+# | MAE | Average absolute error in dollars | Lower |
+
+
+# | Part                         | Time Complexity            | Space Complexity | Reason                                      |
+# |------------------------------|----------------------------|------------------|---------------------------------------------|
+# | Preprocessing and Haversine  | O(n)                       | O(n)             | One pass over the rows                      |
+# | IQR (quantile)               | O(n log n)                 | O(n)             | Needs sorting to find Q1 and Q3             |
+# | Linear Regression (train)    | O(n·d² + d³)               | O(n·d)           | Matrix operations, d is small (11 features) |
+# | Linear Regression (predict)  | O(d) per row               | O(d)             | Only d weights stored                       |
+# | Random Forest (train)        | O(T · n log n · d)         | O(T · n)         | Each tree is grown deep on n samples        |
+# | Random Forest (predict)      | O(T · log n) per row       | O(T · n)         | Walk down T trees, all trees stored         |
+                                                                                                                
+# | Point                     | Linear Regression                       | Random Forest                                   |
+# |---------------------------|-----------------------------------------|-------------------------------------------------|
+# | Type                      | Linear, single equation                 | Ensemble of 100 decision trees                  |
+# | Non-linear patterns       | Cannot capture them                     | Captures them well                              |
+# | Feature interactions      | Not captured (hour × distance, etc.)    | Learned automatically                           |
+# | Sensitive to outliers     | Yes                                     | Less sensitive                                  |
+# | Needs feature scaling     | Helpful                                 | Not needed                                      |
+# | Training speed            | Very fast                               | Slower                                          |
+# | Prediction speed          | Very fast                               | Slower                                          |
+# | Memory                    | Tiny (11 weights)                       | Large (100 full trees)                          |
+# | Interpretability          | Easy (coefficients)                     | Harder (feature importance only)                |
+# | Overfitting risk          | Low (may underfit)                      | Low due to averaging, can overfit if unchecked  |
+# | Accuracy on this dataset  | Lower                                   | Higher (expected)                               |
+
+# Why Random Forest is better here
+    
+# Fare is not a straight-line function of the inputs. Raw latitude and longitude have no linear link to fare, 
+# and airport trips, rush hour and yearly price increases create jumps and interactions.
+# Linear Regression can only add up weighted features, so it underfits. Random Forest splits the data into 
+#                  regions (for example “distance > 10 km and hour = 18”) and learns each pattern.
+# Averaging 100 trees cancels each tree’s errors, which gives a lower RMSE and a higher R².
+# Trade-off: Linear Regression is faster, smaller and easier to explain. Choose it when speed and interpretability matter more than accuracy.
+
+
